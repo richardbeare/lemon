@@ -23,6 +23,7 @@ geom_pointpath(
   linesize = 0.5,
   linecolour = waiver(),
   linecolor = waiver(),
+  linealpha = waiver(),
   arrow = NULL,
   ...
 )
@@ -44,6 +45,7 @@ geom_pointline(
   linesize = 0.5,
   linecolour = waiver(),
   linecolor = waiver(),
+  linealpha = waiver(),
   arrow = NULL,
   ...
 )
@@ -113,6 +115,10 @@ a gap by \code{distance}.}
 
 \item{linecolour, linecolor}{When not \code{waiver()}, the line is drawn with
 this colour instead of that set by aesthetic \code{colour}.}
+
+\item{linealpha}{When not \code{waiver()}, the line is drawn with
+this alpha instead of that set by aesthetic \code{alpha}. \code{linecolor} 
+takes precedence}
 
 \item{arrow}{Arrow specification, as created by \code{\link[grid]{arrow}}.}
 

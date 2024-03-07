@@ -71,6 +71,9 @@ NULL
 #' @param shorten,threshold When points are closer than \code{threshold},
 #'   shorten the line by the proportion in \code{shorten} instead of adding
 #'   a gap by \code{distance}.
+#' @param linealpha When not \code{waiver()}, the line is drawn with
+#'   this alpha instead of that set by aesthetic \code{alpha}. \code{linecolor} 
+#'   takes precedence
 #' @param linecolour,linecolor When not \code{waiver()}, the line is drawn with
 #'   this colour instead of that set by aesthetic \code{colour}.
 #'
