@@ -88,6 +88,7 @@ geom_pointpath <- function(mapping = NULL, data = NULL, stat = "identity",
                       linesize = 0.5,
                       linecolour = waiver(),
                       linecolor = waiver(),
+                      linealpha = waiver(),
                       arrow = NULL,
                       ...) {
   if (is.waive(linecolour) && !is.waive(linecolor)) linecolour <- linecolor
@@ -110,6 +111,7 @@ geom_pointpath <- function(mapping = NULL, data = NULL, stat = "identity",
       linemitre = linemitre,
       linesize = linesize,
       linecolour = linecolour,
+      linealpha = linealpha,
       arrow = arrow,
       ...
     )
@@ -149,6 +151,7 @@ GeomPointPath <- ggplot2::ggproto('GeomPointPath',
                         threshold = 0.1,
                         linesize = 0.5,
                         linecolour = waiver(),
+                        linealpha = waiver(),
                         arrow = NULL,
                         lineend = "butt", linejoin = "round", linemitre = 1
                         ) {
@@ -249,8 +252,16 @@ GeomPointPath <- ggplot2::ggproto('GeomPointPath',
           x0=x, y0=y, x1=x1, y1=y1,
           arrow = arrow,
           gp = grid::gpar(
-            col = ggplot2::alpha(colour, alpha),
-            fill = ggplot2::alpha(colour, alpha),
+            col = if (is.waive(linealpha)) {
+                     ggplot2::alpha(colour, alpha) 
+            } else {
+                ggplot2::alpha(colour, linealpha) 
+              },
+            fill = if (is.waive(linealpha)) {
+              ggplot2::alpha(colour, alpha)
+              } else {
+                ggplot2::alpha(colour, linealpha)
+              },
             lwd = linesize * .pt,
             lty = linetype,
             lineend = lineend,
@@ -258,8 +269,8 @@ GeomPointPath <- ggplot2::ggproto('GeomPointPath',
             linemitre = linemitre
           )
         ))
-      if (!is.waive(linecolour))
-        gr_distant$gp$col <- linecolour
+        if (!is.waive(linecolour))
+          gr_distant$gp$col <- linecolour
       }
     }
 
@@ -270,13 +281,21 @@ GeomPointPath <- ggplot2::ggproto('GeomPointPath',
         x1 = x1 - shorten/2 * deltax; x1 = grid::unit(x1, 'native');
         y1 = y1 - shorten/2 * deltay; y1 = grid::unit(y1, 'native');
       })
-
       gr_short <- with(df[!df$end, ], grid::segmentsGrob(
         x0=x, y0=y, x1=x1, y1=y1,
         arrow = arrow,
         gp = grid::gpar(
-          col = ggplot2::alpha(colour, alpha),
-          fill = ggplot2::alpha(colour, alpha),
+          col = if (is.waive(linealpha)) {
+            ggplot2::alpha(colour, alpha)
+          } else {
+            ggplot2::alpha(colour, linealpha)
+            }
+            ,
+          fill = if (is.waive(linealpha)) {
+            ggplot2::alpha(colour, alpha)
+            } else {
+              ggplot2::alpha(colour, linealpha)
+            },
           lwd = linesize * .pt,
           lty = linetype,
           lineend = lineend,
@@ -312,6 +331,7 @@ geom_pointline <- function(mapping = NULL, data = NULL, stat = "identity",
                            linesize = 0.5,
                            linecolour = waiver(),
                            linecolor = waiver(),
+                           linealpha = waiver(),
                            arrow = NULL,
                            ...) {
 
@@ -335,6 +355,7 @@ geom_pointline <- function(mapping = NULL, data = NULL, stat = "identity",
       linemitre = linemitre,
       linesize = 0.5,
       linecolour = linecolour,
+      linealpha = linealpha,
       arrow = arrow,
       ...
     )
